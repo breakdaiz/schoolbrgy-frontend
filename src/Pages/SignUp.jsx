@@ -8,6 +8,8 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true)
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
@@ -21,6 +23,7 @@ const SignUp = () => {
   const registerHandler = async e => {
     e.preventDefault();
 
+    setLoading(true)
     try {
       const response = await axios.post("https://schoolbrgy-api.vercel.app/register", {
         firstName,
@@ -34,16 +37,21 @@ const SignUp = () => {
         uniformSize,
       });
       console.log(response);
+
+
       if (response.status) {
+        setLoading(false);
         alert("Thank you for Registration")
         navigate("/success-login"); //use this  instead of history.push
       }
       else {
+        setLoading(false);
         alert("Please Try again!")
       }
 
 
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -71,7 +79,7 @@ const SignUp = () => {
                   First Name / Unang Pangalan
                 </label>
                 <input
-                required
+                  required
                   type='text'
                   name='firstName'
                   className=' w-full px-3 py-2 font-semibold border-1 rounded-sm border-gray-600
@@ -89,7 +97,7 @@ const SignUp = () => {
                   Last Name / Apelyido
                 </label>
                 <input
-                required
+                  required
                   type='text'
                   name='lastName'
                   className=' w-full px-3 py-2 font-semibold border-1 rounded-sm border-gray-600
@@ -108,7 +116,7 @@ const SignUp = () => {
                   Age / Edad
                 </label>
                 <input
-                required
+                  required
                   type='number'
                   name='age'
                   className='w-full px-3 py-2 font-semibold border-1 rounded-sm border-gray-600
@@ -172,7 +180,7 @@ const SignUp = () => {
                   Contact #
                 </label>
                 <input
-                required
+                  required
                   type='text'
                   name='contact-number'
                   className='w-full px-3 py-2 font-semibold border-1 rounded-sm border-gray-600
@@ -191,7 +199,7 @@ const SignUp = () => {
                   Address
                 </label>
                 <input
-                required
+                  required
                   type='text'
                   name='address'
                   className='w-full px-3 py-2 font-semibold border-1 rounded-sm border-gray-600
@@ -210,7 +218,7 @@ const SignUp = () => {
                   Name of School / Pangalan ng Paaralan
                 </label>
                 <input
-                required
+                  required
                   type='text'
                   name='schoolName'
                   className='w-full px-3 py-2 font-semibold border-1 rounded-sm border-gray-600
@@ -229,7 +237,7 @@ const SignUp = () => {
                   Grade sa Pasukan
                 </label>
                 <input
-                required
+                  required
                   type='text'
                   name='gradeLevel'
                   className='w-full px-3 py-2 font-semibold border-1 rounded-sm border-gray-600
@@ -248,7 +256,7 @@ const SignUp = () => {
                   Size of Uniform (Shorts or Palda)
                 </label>
                 <input
-                required
+                  required
                   type='text'
                   name='uniformSize'
                   className='w-full px-3 py-2 font-semibold border-1 rounded-sm border-gray-600
@@ -270,6 +278,22 @@ const SignUp = () => {
             </form>
           </div>
         </div>
+
+        {/* Spinner */}
+        {loading && (
+          <div className='hide'>
+            <div className='fixed top-0 start-0 size-full bg-white/50 rounded-lg dark:bg-neutral-800/40'></div>
+            <div className='absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+              <div
+                className='animate-spin inline-block size-10 border-3 border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500'
+                role='status'
+                aria-label='loading'
+              >
+                <span className='sr-only'>Loading...</span>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
     </>
   );
