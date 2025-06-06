@@ -8,7 +8,7 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
