@@ -22,7 +22,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/register", {
+      const response = await axios.post("https://schoolbrgy-api.vercel.app/register", {
         firstName,
         lastName,
         age,
